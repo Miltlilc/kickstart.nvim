@@ -47,7 +47,7 @@ return {
             enabled = true,
             settings = {
               profile = 'GoogleStyle',
-              url = home .. '/.config/lvim/.java-google-formatter.xml',
+              url = home .. '/.config/nvim/.java-google-formatter.xml',
             },
           },
         },
@@ -72,7 +72,7 @@ return {
           '-Declipse.product=org.eclipse.jdt.ls.core.product',
           '-Dlog.protocol=true',
           '-Dlog.level=ALL',
-          '-javaagent:/Users/mitlilc/.config/jdtls/plugins/lombok.jar',
+          '-javaagent:/Users/v.kochanov/.config/jdtls/plugins/lombok.jar',
           '-Xmx1g',
           '--add-modules=ALL-SYSTEM',
           '--add-opens',
@@ -81,11 +81,11 @@ return {
           'java.base/java.lang=ALL-UNNAMED',
 
           '-jar',
-          '/Users/mitlilc/.config/jdtls/plugins/org.eclipse.equinox.launcher_1.6.800.v20240330-1250.jar',
+          '/Users/v.kochanov/.config/jdtls/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar',
           '-configuration',
-          '/Users/mitlilc/.config/jdtls/config_mac',
+          '/Users/v.kochanov/.config/jdtls/config_mac',
           '-data',
-          '/Users/mitlilc/.config/jdtls/workspaces/' .. project_name,
+          '/Users/v.kochanov/.config/jdtls/workspaces/' .. project_name,
         },
 
         capabilities = extendedClientCapabilities,

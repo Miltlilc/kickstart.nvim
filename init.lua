@@ -311,7 +311,7 @@ require('lazy').setup({
           :find()
       end
 
-      vim.keymap.set('n', '<C-e>', function()
+      vim.keymap.set('n', '<M-e>', function()
         toggle_telescope(harpoon:list())
       end, { desc = 'Open harpoon window' })
       -- Toggle previous & next buffers stored within Harpoon list
@@ -685,11 +685,6 @@ require('lazy').setup({
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
-          end,
-        },
-        require('lspconfig').jdtls.setup {
-          on_attach = function(client, buffnr)
-            print 'jdtls is attached, pog!'
           end,
         },
       }
