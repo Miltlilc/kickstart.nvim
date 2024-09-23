@@ -83,7 +83,7 @@ return {
           '-jar',
           '/Users/v.kochanov/.config/jdtls/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar',
           '-configuration',
-          '/Users/v.kochanov/.config/jdtls/config_mac',
+          '/Users/v.kochanov/.config/jdtls/config_mac_arm',
           '-data',
           '/Users/v.kochanov/.config/jdtls/workspaces/' .. project_name,
         },
