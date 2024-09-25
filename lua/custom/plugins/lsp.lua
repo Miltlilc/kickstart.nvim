@@ -122,8 +122,8 @@ return {
 
           require('spring_boot').setup {}
 
-          -- NOTE: comment out if you don't use Lspsaga
-          require('lspsaga').setup {}
+          -- -- NOTE: comment out if you don't use Lspsaga
+          -- require('lspsaga').setup {}
         end,
       }
       config.bundles = config.bundles or {}
@@ -146,19 +146,24 @@ return {
     },
   },
   {
-    'nvimdev/lspsaga.nvim',
+    'nvimtools/none-ls.nvim',
     config = function()
-      print 'lsp is engaged'
-      vim.keymap.set('n', '<leader><Tab>', ':Lspsaga code_action<CR>', { desc = 'Show code actions' })
-      vim.keymap.set('n', '<leader><CR>', ':Lspsaga peek_definition<CR>', { desc = 'Show element definition' })
-      require('lspsaga').setup {}
+      local null_ls = require 'null-ls'
+      null_ls.setup {
+        sources = {
+          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.completion.spell,
+          null_ls.builtins.formatting.google_java_format,
+          null_ls.builtins.diagnostics.codespell,
+          null_ls.builtins.formatting.codespell,
+          null_ls.builtins.formatting.jq,
+          null_ls.builtins.formatting.uncrustify,
+          null_ls.builtins.formatting.mdformat,
+        },
+      }
     end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons', -- optional
-    },
   },
-  {
-    'ray-x/lsp_signature.nvim',
-  },
+  'nvim-treesitter/nvim-treesitter', -- optional
+  'nvim-tree/nvim-web-devicons', -- optional
+  'ray-x/lsp_signature.nvim',
 }

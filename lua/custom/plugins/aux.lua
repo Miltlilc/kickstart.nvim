@@ -22,4 +22,17 @@ return {
       },
     },
   },
+  {
+    'ggandor/leap.nvim',
+    dependencies = {
+      'tpope/vim-repeat',
+    },
+    config = function()
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+      vim.keymap.set({ 'n', 'x', 'o' }, '<leader>s', '<Plug>(leap)')
+      vim.keymap.set({ 'n', 'x', 'o' }, '<leader>vs', function()
+        require('leap.treesitter').select()
+      end)
+    end,
+  },
 }
