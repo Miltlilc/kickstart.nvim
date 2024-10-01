@@ -4,7 +4,7 @@ return {
     ft = { 'java' },
     config = function()
       local jdtls = require 'jdtls'
-      local jdtls_dap = require 'jdtls.dap'
+      -- local jdtls_dap = require 'jdtls.dap'
       local jdtls_setup = require 'jdtls.setup'
 
       local home = os.getenv 'HOME'
@@ -13,13 +13,12 @@ return {
       local root_dir = jdtls_setup.find_root(root_markers)
 
       local project_name = vim.fn.fnamemodify(root_dir, ':p:h:t')
-      local workspace_dir = home .. '/.cache/jdtls/workspace' .. project_name
 
       local extendedClientCapabilities = jdtls.extendedClientCapabilities
       extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
-
       local settings = {
         java = {
+          contentProvider = { preferred = 'fernflower' },
           jdt = {
             ls = {
               vmargs = '-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m',
@@ -52,7 +51,6 @@ return {
           },
         },
         signatureHelp = { enabled = true },
-        contentProvider = { preferred = 'fernflower' },
         extendedClientCapabilities = extendedClientCapabilities,
         sources = {
           organizeImports = {
@@ -63,8 +61,6 @@ return {
       }
 
       local config = {
-        -- The command that starts the language server
-        -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
         cmd = {
           'java',
           '-Declipse.application=org.eclipse.jdt.ls.core.id1',
@@ -100,16 +96,11 @@ return {
         },
 
         on_attach = function(client, bufnr)
-          jdtls.setup_dap {
-            config_overrides = {},
-            hotcodereplace = 'auto',
-          }
-          jdtls_dap.setup_dap_main_class_configs()
-
-          -- Create a command `:Format` local to the LSP buffer
-          vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-            vim.lsp.buf.format()
-          end, { desc = 'Format current buffer with LSP' })
+          -- jdtls.setup_dap {
+          --   config_overrides = {},
+          --   hotcodereplace = 'auto',
+          -- }
+          -- jdtls_dap.setup_dap_main_class_configs()
 
           require('lsp_signature').on_attach({
             bind = true,
@@ -126,13 +117,14 @@ return {
           -- require('lspsaga').setup {}
         end,
       }
-      config.bundles = config.bundles or {}
+      config.bundles = {}
+      vim.list_extend(config.bundles, require('spring_boot').java_extensions() or {})
+      vim.list_extend(config.bundles, vim.split(vim.fn.glob(home .. '/.config/jdtls/decomp/server/*.jar'), '\n'))
+
       config.init_options = {
         bundles = config.bundles,
         extendedClientCapabilities = extendedClientCapabilities,
       }
-
-      vim.list_extend(config.bundles, require('spring_boot').java_extensions() or {})
 
       require('jdtls').start_or_attach(config)
     end,

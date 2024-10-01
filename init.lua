@@ -117,11 +117,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd({
-  'BufEnter',
-}, {
-  group = vim.api.nvim_create_augroup('jdtls_lsp', { clear = true }),
-  pattern = '*.java',
+vim.api.nvim_create_autocmd('FileType', {
+  -- group = vim.api.nvim_create_augroup('jdtls_lsp', { clear = true }),
+  pattern = 'java',
   callback = function()
     require('custom.plugins.lsp')[1].config()
   end,
@@ -199,7 +197,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -242,7 +240,7 @@ require('lazy').setup({
 
       -- Document existing key chains
       spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+        { '<leader>c', group = '[C]ode',     mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         -- { '<leader>s', group = '[S]earch' },
@@ -274,7 +272,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       require('telescope').setup {
@@ -336,14 +334,14 @@ require('lazy').setup({
       },
     },
   },
-  { 'Bilal2453/luvit-meta', lazy = true },
+  { 'Bilal2453/luvit-meta',     lazy = true },
   {
     'neovim/nvim-lspconfig',
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
       'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
@@ -429,7 +427,7 @@ require('lazy').setup({
         --
         ts_ls = {
           root_dir = function(...)
-            return require('lspconfig.util').root_pattern '.git'(...)
+            return require('lspconfig.util').root_pattern '.git' (...)
           end,
           single_file_support = false,
           settings = {
@@ -514,7 +512,7 @@ require('lazy').setup({
     cmd = { 'ConformInfo' },
     keys = {
       {
-        '<leader>f',
+        '<leader>F',
         function()
           require('conform').format { async = true, lsp_format = 'first' }
         end,
